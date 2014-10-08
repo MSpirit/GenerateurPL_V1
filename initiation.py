@@ -36,11 +36,40 @@ def verifier_mes_quantite(quantite):
         exit(1)
     except Exception as err:
         if err.args[0] == 'Erreur':
-            logging.error("La valeur saisie pour la quantité ne peut être négative ou supérieur à 100: '%i'" % genre)
+            logging.error("La valeur saisie pour la quantité ne peut être négative: '%i'" % genre)
             exit(1)
 
 #print(args)
 args.genrePlaylist[1] = verifier_mes_quantite(args.genrePlaylist[1])
+
+def gestionPourcentage(typeArg):
+    i = 0
+    ligneList = 1
+    j = 0
+    ligneList2 = 1
+    somme = 0
+
+    '''Tant que la liste du type d'argument passé à encore une ligne'''
+    while ligneList <= len(typeArg):
+        logging.info("Utilisation de la fonction pour vérifier que le pourcentage est entre 0 et 100")
+        '''Vérification du %'''
+        verifier_mes_quantite(typeArg[i][1])
+        print (pct)
+        somme = somme + pct
+        ligneList = ligneList + 1
+        i = i + 1
+    logging.info('Total des sommes des %: ' + str(somme))
+    print (somme)
+    if somme > 100:
+        '''Tant que la liste du type d'argument passé à encore une ligne'''
+        logging.info('Remise du total des % à 100 grace à la proportionalité')
+        while ligneList2 <= len(args.genre):
+            '''Round() permet d'arrondir à l'entier le plus proche'''
+            typeArg[j][1] = round(int(typeArg[j][1])*100/somme)
+            print(typeArg[j][1])
+            j = j + 1
+            ligneList2 = ligneList2 + 1
+
 
 
 
