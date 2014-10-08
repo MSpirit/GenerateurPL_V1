@@ -24,25 +24,36 @@ logging.info(args.dureePlaylist)
 logging.info(args.formatPlaylist)
 logging.info(args.nomFichierPlaylist)
 
+#Vérification d'un temps positif'''
+logging.info("Utilisation de la fonction pour vérifier que le temps est un entier positif")
+if args.dureePlaylist < 0 :
+    print ("Le temps doit être positive !")
+    logging.error("le temps " + str(args.dureePlaylist) + " n'est pas un entier positif")
+    exit(1)
+    
 def verifier_mes_quantite(quantite):
     try:
-        logging.info("Mise en marche de la fonction")
+        global genre
+        logging.info("Mise en marche de la fonction des vérification des quantités")
         genre = abs(int(quantite))
-        if 0 < genre > 100:
-            raise Exception('Erreur')
-        return genre
+        if genre < 0:
+            genre = abs(genre)
+            logging.warning('La quantité saisie doit etre positive')
+            logging.info('Nombre négatif transformé en positif: ' + str(genre))
+            
+        elif genre > 100:
+            
+            genre = None
+            logging.warning('La quantité saisie est supérieur à 100')
+            logging.info('Nombre supérieur à 100 transformé en : ' + str(genre))
+            return True
+            return genre
     except ValueError:
         logging.error("La valeur saisie pour la quantité n'est pas une valeur numérique : '" + quantite + "'")
         exit(1)
-    except Exception as err:
-        if err.args[0] == 'Erreur':
-            logging.error("La valeur saisie pour la quantité ne peut être négative: '%i'" % genre)
-            exit(1)
-
-#print(args)
-args.genrePlaylist[1] = verifier_mes_quantite(args.genrePlaylist[1])
-
-def gestionPourcentage(typeArg):
+        
+def gestionPctage(typeArg):
+    logging.info("Mise en marche de la fonction des vérification des pourcentages")
     i = 0
     ligneList = 1
     j = 0
@@ -54,8 +65,8 @@ def gestionPourcentage(typeArg):
         logging.info("Utilisation de la fonction pour vérifier que le pourcentage est entre 0 et 100")
         '''Vérification du %'''
         verifier_mes_quantite(typeArg[i][1])
-        print (pct)
-        somme = somme + pct
+        print (genre)
+        somme = somme + genre
         ligneList = ligneList + 1
         i = i + 1
     logging.info('Total des sommes des %: ' + str(somme))
@@ -63,24 +74,28 @@ def gestionPourcentage(typeArg):
     if somme > 100:
         '''Tant que la liste du type d'argument passé à encore une ligne'''
         logging.info('Remise du total des % à 100 grace à la proportionalité')
-        while ligneList2 <= len(args.genre):
+        while ligneList2 <= len(args.genrePlaylist):
             '''Round() permet d'arrondir à l'entier le plus proche'''
             typeArg[j][1] = round(int(typeArg[j][1])*100/somme)
             print(typeArg[j][1])
             j = j + 1
             ligneList2 = ligneList2 + 1
 
-
-
+          
+            
+#print(args)
 
 for argument in ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']:
 # Si l'argument est renseigné
     if getattr(args, argument) is not None:
         # On écrit la valeur de ses ss-arg dans le fichier de logs
         logging.info(' Argument --' + argument + ' :\t' + getattr(args, argument)[0] + ' ; ' + str(getattr(args, argument)[1]))
-verifier_mes_quantite(getattr(args, argument))
 
 
-logging.debug(' *****************************************')
+
+args.genrePlaylist[1] = verifier_mes_quantite(args.genrePlaylist[1])
+
+logging.info('Tout a été opérationel')
+logging.info(' *****************************************')
 logging.shutdown()
 exit(0)
