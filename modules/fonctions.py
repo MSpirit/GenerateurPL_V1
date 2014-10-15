@@ -11,12 +11,12 @@ def verification_du_temps(argumentAVerifier):
 def verifier_mes_quantite(quantite):
     try:
         logging.info("Mise en marche de la fonction des vérification des quantités")
-        quantiteValidee = abs(int(quantite))
+        quantiteValidee = abs(int(quantite))       
         if quantiteValidee > 100:
             return None
         return quantiteValidee
     except ValueError:
-        logging.error("La valeur saisie pour la quantité n'est pas une valeur numérique : '" + quantite + "'")
+        logging.error("La valeur saisie pour la quantité n'est pas une valeur numérique : '" + quantite +"'")
         return None
             
 def aVoir(arguments):
@@ -24,4 +24,4 @@ def aVoir(arguments):
 # Si l'argument est renseigné
         if getattr(arguments, argument) is not None:
             # On écrit la valeur de ses ss-arg dans le fichier de logs
-            logging.info(' Argument --' + argument + ' :\t' + getattr(arguments, argument)[0] + ' ; ' + str(getattr(arguments, argument)[1]))
+            logging.info(' Argument --' + argument + ' :\t' + getattr(arguments, argument)[0][0] + ' ; ' + str(getattr(arguments, argument)[0][1]) + ' \t ' + getattr(arguments,argument)[1][0] + ' ; ' + str(getattr(arguments,argument)[1][1]) + '.')

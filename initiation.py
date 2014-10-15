@@ -3,8 +3,8 @@ import modules.arguments
 import modules.fonctions
 
 
-#logging.basicConfig(filename ="Journal_log.log", level = logging.DEBUG)
-logging.basicConfig(level = logging.DEBUG)
+logging.basicConfig(filename ="Journal_log.log", level = logging.DEBUG)
+#logging.basicConfig(level = logging.DEBUG)
 logging.info("Mise en marche du programme")
 
 # On affiche les arguments obligatoire
@@ -14,7 +14,8 @@ args = modules.arguments.parser.parse_args()
 logging.info(repr(args))
             
 modules.fonctions.verification_du_temps(args.dureePlaylist)
-args.genrePlaylist[1] = modules.fonctions.verifier_mes_quantite(args.genrePlaylist[1])
+args.genrePlaylist[0][1] = modules.fonctions.verifier_mes_quantite(args.genrePlaylist[0][1])
+args.genrePlaylist[1][1] = modules.fonctions.verifier_mes_quantite(args.genrePlaylist[1][1])
 logging.info(repr(args))
 
 modules.fonctions.aVoir(args)
@@ -23,6 +24,6 @@ modules.fonctions.aVoir(args)
 #modules.arguments.args.genrePlaylist[1] = fonctions.verifier_mes_quantite(modules.arguments.args.genrePlaylist[1])
 
 logging.info('Tout a été opérationel')
-logging.info(' *****************FIN************************')
+logging.info('*****************FIN************************')
 logging.shutdown()
 exit(0)
