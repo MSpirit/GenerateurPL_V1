@@ -3,6 +3,9 @@ import modules.arguments
 import modules.fonctions
 
 
+from database.recuperationdonnees import recupererDonnees
+
+
 logging.basicConfig(filename ="Journal_log.log", level = logging.DEBUG)
 #logging.basicConfig(level = logging.DEBUG)
 logging.info("Mise en marche du programme")
@@ -21,8 +24,9 @@ logging.info(repr(args))
 
 modules.fonctions.aVoir(args)
 
+recupererDonnees(args)
+print("Récupération de votre musique")
 
-#modules.arguments.args.genrePlaylist[1] = fonctions.verifier_mes_quantite(modules.arguments.args.genrePlaylist[1])
 
 print("Bonne lecture de votre playlist")
 logging.info('Tout a été opérationel')
