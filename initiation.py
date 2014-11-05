@@ -17,9 +17,6 @@ modules.fonctions.verification_du_temps(args.dureePlaylist)
 args.genrePlaylist[0][1] = modules.fonctions.verifier_mes_quantite(args.genrePlaylist[0][1])
 
 
-
-
-
 logging.info(repr(args))
 
 modules.fonctions.aVoir(args)
