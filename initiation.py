@@ -1,9 +1,7 @@
 import logging
 import modules.arguments
 import modules.fonctions
-
-
-from database.recuperationdonnees import recupererDonnees
+from database.recuperationdonnees import *
 
 
 logging.basicConfig(filename ="Journal_log.log", level = logging.DEBUG)

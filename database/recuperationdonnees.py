@@ -1,6 +1,6 @@
 import sqlalchemy
 import random
-from database.Basedonnees_initiation import *
+from database.Basedonnees_initiation import table_morceaux, connection as conn
 from creationfichier.fichier import writeM3U
 
 argument_cli = ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']
@@ -25,9 +25,20 @@ def recupererDonnees(args):
                 recuperation = list(recuperation)
                 random.shuffle(recuperation)
 
+                argument.insert(2,[])
+                i=0
+                somme_duree = 0
+                for ligne in recuperation:
+                    somme_duree += ligne[5]
+                    if(somme_duree < argument[1]*60):
+                        argument[2].insert(i, ligne)
+                        i += 1
+                    else:
+                        somme_duree -= ligne[5]
+
 
             
 def EcritureFichier(args, playlist):
-    if(args.type_playlist == 'm3u'):
+    if(args.formatPlaylist == 'm3u'):
         writeM3U(args, playlist)
  

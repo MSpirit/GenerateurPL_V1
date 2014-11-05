@@ -17,13 +17,13 @@ table_morceaux = sqlalchemy.Table('morceaux',metadonnees,
                                   sqlalchemy.Column('chemin',sqlalchemy.String)
                                   )
 
-s = sqlalchemy.select([table_morceaux])
-
-
-
-conn = connection.connect()
-result = conn.execute(s)
-
-for row in result:
-    print(row)
-    
+# s = sqlalchemy.select([table_morceaux])
+# 
+# 
+# 
+# conn = connection.connect()
+# result = conn.execute(s)
+# 
+# for row in result:
+#     print(row)
+#     
