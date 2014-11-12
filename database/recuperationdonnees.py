@@ -4,11 +4,10 @@ from database.Basedonnees_initiation import table_morceaux, connection as conn
 from creationfichier.fichier import writeM3U
 
 argument_cli = ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']
-playlist =[]
+musiquePL =[]
 
 
 def recupererDonnees(args):
-    global recuperation
     for attribut in argument_cli:
         if getattr(args, attribut) is not None:
             for argument in getattr(args, attribut):
@@ -27,18 +26,48 @@ def recupererDonnees(args):
 
                 argument.insert(2,[])
                 i=0
-                somme_duree = 0
+                duree = 0
                 for ligne in recuperation:
-                    somme_duree += ligne[5]
-                    if(somme_duree < argument[1]*60):
+                    duree += ligne[5]
+                    if(duree < argument[1]*60):
                         argument[2].insert(i, ligne)
                         i += 1
                     else:
-                        somme_duree -= ligne[5]
+                        duree -= ligne[5]
 
 
-            
-def EcritureFichier(args, playlist):
+#Génération de la liste de playlist
+def generationPlaylist(args):
+    i = 0
+    for attribut in argument_cli:
+        if getattr(args, attribut) is not None:
+            for argument in getattr(args, attribut):
+                for musique in argument[2]:
+                    musiquePL.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
+                    i += 1
+    random.shuffle(musiquePL)
+        
+def completePlaylist(args):
+    duree = 0
+    for musique in musiquePL:
+        duree += musique[3]
+        
+    if(duree < args.dureePlaylist*60):
+        select_morceaux = sqlalchemy.select([table_morceaux])
+        resultat = conn.execute(select_morceaux)
+        resultat = list(resultat)
+        random.shuffle(resultat)
+    
+    i=len(musiquePL)
+    for musique in resultat:
+        duree += musique[5]
+        if(duree < args.dureePlaylist*60):
+            musiquePL.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
+            i += 1
+        else:
+            duree -= musique[5]
+    
+def EcritureFichier(args, musiquePL):
     if(args.formatPlaylist == 'm3u'):
-        writeM3U(args, playlist)
+        writeM3U(args, musiquePL)
  

@@ -25,6 +25,16 @@ modules.fonctions.aVoir(args)
 recupererDonnees(args)
 print("Récupération de votre musique")
 
+generationPlaylist(args)
+print("generation de votre musique")
+
+completePlaylist(args)
+print("Récupération de votre musique")
+
+EcritureFichier(args, musiquePL)
+print("Ecriture de votre playlist")
+
+
 
 print("Bonne lecture de votre playlist")
 logging.info('Tout a été opérationel')

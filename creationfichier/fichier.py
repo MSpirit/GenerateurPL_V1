@@ -1,6 +1,6 @@
-def writeM3U(args, playlist):
-    playlistFileName = args.nom_playlist +"."+ args.formatPlaylist
+def writeM3U(args, musiquePL):
+    playlistFileName = args.nomFichierPlaylist +"."+ args.formatPlaylist
     playlistFile = open(playlistFileName, 'w')
-    for champ_musique in playlist:
-        playlistFile.write(champ_musique[8] + "\n")
+    for champ_musique in musiquePL:
+        playlistFile.write(champ_musique[4] + "\n")
     playlistFile.close()
