@@ -1,7 +1,7 @@
 import sqlalchemy
 import random
 from database.Basedonnees_initiation import table_morceaux, connection as conn
-from creationfichier.fichier import writeM3U
+from creationfichier.fichier import writeM3U, writeXSPF
 
 argument_cli = ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']
 musiquePL =[]
@@ -23,7 +23,8 @@ def recupererDonnees(args):
                 recuperation = conn.execute(RecuperationDonnees)
                 recuperation = list(recuperation)
                 random.shuffle(recuperation)
-
+                
+                
                 argument.insert(2,[])
                 i=0
                 duree = 0
@@ -34,7 +35,7 @@ def recupererDonnees(args):
                         i += 1
                     else:
                         duree -= ligne[5]
-
+                          
 
 #Génération de la liste de playlist
 def generationPlaylist(args):
@@ -47,7 +48,7 @@ def generationPlaylist(args):
                     i += 1
     random.shuffle(musiquePL)
         
-def completePlaylist(args):
+def Playlist(args):
     duree = 0
     for musique in musiquePL:
         duree += musique[3]
@@ -70,4 +71,5 @@ def completePlaylist(args):
 def EcritureFichier(args, musiquePL):
     if(args.formatPlaylist == 'm3u'):
         writeM3U(args, musiquePL)
- 
+    if(args.formatPlaylist == 'xspf'):
+        writeXSPF(args, musiquePL)

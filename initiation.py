@@ -28,7 +28,7 @@ print("Récupération de votre musique")
 generationPlaylist(args)
 print("generation de votre musique")
 
-completePlaylist(args)
+Playlist(args)
 print("Récupération de votre musique")
 
 EcritureFichier(args, musiquePL)
