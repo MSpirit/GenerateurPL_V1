@@ -29,7 +29,7 @@ generationPlaylist(args)
 print("generation de votre musique")
 
 Playlist(args)
-print("Récupération de votre musique")
+print("Playlist en phase de création")
 
 EcritureFichier(args, musiquePL)
 print("Ecriture de votre playlist")
