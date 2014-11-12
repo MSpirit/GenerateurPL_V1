@@ -25,3 +25,17 @@ def writeXSPF(args, musiquePL):
                                "\t\t</track>\n")
     fichierxspf.write("\t</trackList>\n</playlist>")
     fichierxspf.close()
+    
+def writePLS(args, musiquePL):
+    i=1
+    fichierPLS1 = (args.nomFichierPlaylist + "." + args.formatPlaylist)
+    fichierpls = open(fichierPLS1, 'w')
+    fichierpls.write("[playlist]\n\n")
+    for champ_musique in musiquePL:
+        fichierpls.write("File"+ str(i) +"="+ champ_musique[4] +"\n")
+        fichierpls.write("creator"+ str(i) +"="+ champ_musique[1] +"\n")
+        fichierpls.write("Title"+ str(i) +"="+ champ_musique[0] + "\n")
+        fichierpls.write("Length"+ str(i) +"="+ str(champ_musique[3]) + "\n\n")
+        i+=1
+    fichierpls.write("NumberOfEntries="+ str(len(musiquePL)) +"\n")
+    fichierpls.close()
