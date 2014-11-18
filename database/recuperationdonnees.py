@@ -14,6 +14,7 @@ def recupererDonnees(args):
     for attribut in argument_cli:
         if getattr(args, attribut) is not None:
             for argument in getattr(args, attribut):
+                #Récupération des données dans la base pour chaque argument ci-dessous
                 if (attribut == 'titrePlaylist'):
                     RecuperationDonnees = sqlalchemy.select([table_morceaux]).where(table_morceaux.c.titre == argument[0])
                 if (attribut == 'artistePlaylist'):
@@ -31,14 +32,14 @@ def recupererDonnees(args):
                 random.shuffle(recuperation)
                 
                 
-                argument.insert(2,[])
+                argument.insert(2,[]) #Création d'une liste en 3eme position des arguments ex : rock 70 []
                 i=0   #Initialisation de la valeur à 0
                 duree = 0 #Initialisation de la valeur à 0
                 
                 for champBDD in recuperation: #Pour chaque musique recuperer dans la liste, on vérifie la durée afin de correspondre au mieux au demande de l'utilisateur
                     duree += champBDD[5]  #Correspond au champ durée dans la BDD
-                    if(duree < argument[1]*60): #Si durée inf. à durée demandé par utilisateur + conversion en minutes
-                        argument[2].insert(i, champBDD)
+                    if(duree < argument[1]*60): #Si durée inf. à durée demandé par utilisateur + conversion en secondes
+                        argument[2].insert(i, champBDD) #Insertion de la musique convertit et vérifié dans la liste
                         i += 1
                     else:
                         duree -= champBDD[5] #Correspond au champ durée dans la BDD
@@ -68,14 +69,14 @@ def Playlist(args):
     
     i=len(musiquePL)
     for musique in resultat:
-        duree += musique[5] #
+        duree += musique[5] # on vérifie que la durée d'un musique ne dépasse pas la durée de la playlist demandée, si c'est le cas, on insére à nouveau une musique aléatoirement
         if(duree < args.dureePlaylist*60):
             musiquePL.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
             i += 1
         else:
-            duree -= musique[5]
+            duree -= musique[5] # Si ce n'est pas le cas, on enlève la musique et on en sélectionne une moins grande pour compléter la playlist avec le moins d'écart possible
     
-def EcritureFichier(args, musiquePL):
+def EcritureFichier(args, musiquePL): #On gére l'écriture du fichier dans les 3 formats proposés
     if(args.formatPlaylist == 'm3u'):
         writeM3U(args, musiquePL)
     if(args.formatPlaylist == 'xspf'):

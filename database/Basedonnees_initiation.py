@@ -1,6 +1,7 @@
 import sqlalchemy
 from database.identifiant import ID, mdp
 
+#Connection à la BDD
 connection = sqlalchemy.create_engine('postgresql://'+ID+':'+ mdp + '@172.16.99.2:5432/radio_libre')
 
 metadonnees = sqlalchemy.MetaData()
