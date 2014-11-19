@@ -16,12 +16,14 @@ logging.info(repr(args))
             
 #Vérification du temps
 modules.fonctions.verification_du_temps(args.dureePlaylist)
-args.genrePlaylist[0][1] = modules.fonctions.verifier_mes_quantite(args.genrePlaylist[0][1])
 
-#Affiche dans le fichier de logs les arguments
-logging.info(repr(args))
+for argument in ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']:
+# Si l'argument est renseigné
+        if getattr(args, argument) is not None:
+            # On écrit la valeur dans le fichier de logs
+            logging.info("Utilisation de la fonction pour vérifier que le pourcentage est entre 0 et 100")
+            modules.fonctions.gestionPourcentage(getattr(args, argument))
 
-modules.fonctions.aVoir(args)
 
 recupererDonnees(args)
 print("Récupération de votre musique")
@@ -35,7 +37,7 @@ logging.info("Génération de la playlist")
 Playlist(args)
 print("Playlist en phase de création")
 
-EcritureFichier(args, musiquePL)
+EcritureFichier(args, musiquePlayList)
 print("Ecriture de votre playlist")
 logging.info("Ecriture de la playlist dans le fichier demandé préalablement par l'utilisateur")
 

@@ -1,7 +1,7 @@
 
 
 #Création d'un fichier au format M3U recuperant la playlist généré préalablement
-def writeM3U(args, musiquePL): #Arguments, et la playlist)
+def writeM3U(args, musiquePlayList): #Arguments, et la playlist)
     
     #Nommage du fichier au demande l'utilisateur
     fichier = args.nomFichierPlaylist +"."+ args.formatPlaylist
@@ -9,7 +9,7 @@ def writeM3U(args, musiquePL): #Arguments, et la playlist)
     fichier = open(fichier, 'w')
     
     #Boucle permettant de recuperé les chemins(Position(lien) des musiques) d'apres la génération de playlist
-    for champ_musique in musiquePL:
+    for champ_musique in musiquePlayList:
         #Ecriture du fichier avec la playlist
         fichier.write(champ_musique[4] + "\n") #champ_musique[4] correspond au chemin des musiques qui on été inséré dans la playlist
     #Fermeture du fichier
@@ -17,7 +17,7 @@ def writeM3U(args, musiquePL): #Arguments, et la playlist)
 
 
 #Création d'un fichier au format XSPF recuperant la playlist généré préalablement
-def writeXSPF(args, musiquePL):
+def writeXSPF(args, musiquePlayList):
     #Nommage du fichier au demande l'utilisateur
     fichierxspf1 = (args.nomFichierPlaylist + "." + args.formatPlaylist)
     #Ouverture du fichier
@@ -28,7 +28,7 @@ def writeXSPF(args, musiquePL):
                        "\t<trackList>\n")
     #Boucle permettant de recuperé les chemins(Position(lien) des musiques) d'apres la génération de playlist
     #Parcours le résultat pour chaque ligne
-    for champ_musique in musiquePL:
+    for champ_musique in musiquePlayList:
         #Ecriture du fichier avec la playlist
             fichierxspf.write("\t\t<track>\n\t\t\t<location>file://"+ champ_musique[4] +"</location>\n"+ #champ_musique[4] correspond au chemin des musiques qui on été insérés dans la playlist
                                "\t\t\t<title>"+ champ_musique[0] +"</title>\n"+ #champ_musique[0] correspond au titre des musiques qui on été insérés dans la playlist(liste)
@@ -42,7 +42,7 @@ def writeXSPF(args, musiquePL):
 
 
 #Création d'un fichier au format PLS recuperant la playlist généré préalablement 
-def writePLS(args, musiquePL):
+def writePLS(args, musiquePlayList):
     i=1
     #Nommage du fichier au demande l'utilisateur
     fichierPLS1 = (args.nomFichierPlaylist + "." + args.formatPlaylist)
@@ -50,13 +50,13 @@ def writePLS(args, musiquePL):
     fichierpls = open(fichierPLS1, 'w')
     #Ecriture du fichier avec la playlist
     fichierpls.write("[playlist]\n\n")
-    for champ_musique in musiquePL:
+    for champ_musique in musiquePlayList:
         fichierpls.write("File"+ str(i) +"="+ champ_musique[4] +"\n")#champ_musique[4] correspond au chemin des musiques qui on été insérés dans la playlist
         fichierpls.write("creator"+ str(i) +"="+ champ_musique[1] +"\n")#champ_musique[1] correspond à l'artiste des musiques
         fichierpls.write("Title"+ str(i) +"="+ champ_musique[0] + "\n")#champ_musique[0] correspond au titre des musiques
         fichierpls.write("Length"+ str(i) +"="+ str(champ_musique[3]) + "\n\n")#champ_musique[3] correspond à la durée d'une musique
         i+=1
         #Ecrit le nombre d'entrée(musique) dans la playlist (optionelles)
-    fichierpls.write("NumberOfEntries="+ str(len(musiquePL)) +"\n")
+    fichierpls.write("NumberOfEntries="+ str(len(musiquePlayList)) +"\n")
     #Fermeture du fichier
     fichierpls.close()

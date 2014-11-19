@@ -20,6 +20,7 @@ def verifier_mes_quantite(quantite):
     except ValueError:
         logging.error("La valeur saisie pour la quantité n'est pas une valeur numérique : '" + quantite +"'")
         return None
+        exit()
             
 
 
@@ -44,7 +45,7 @@ def gestionPourcentage(typeArg):
         i = i + 1
     logging.info("La sommes totale des genres est de : " + str(somme) +".")
     try:
-        if somme > 100 or somme < 100:        
+        if somme >= 100 or somme < 100:        
             #Tant que la liste du type d'argument passé par l'utilisateur à encore une ligne
             logging.info('Remise du total des % à 100 grace à la proportionalité')
             while ligneListe2 <= len(typeArg):
@@ -53,15 +54,8 @@ def gestionPourcentage(typeArg):
                 logging.info(str(typeArg[j][1]) + "% de genres voulues")
                 j = j + 1
                 ligneListe2 = ligneListe2 + 1
+                
+        print('ok')
     except ValueError:
         logging.error("erreur")
         return None          
-            
-            
-def aVoir(args):
-    for argument in ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']:
-# Si l'argument est renseigné
-        if getattr(args, argument) is not None:
-            # On écrit la valeur de ses ss-arg dans le fichier de logs
-            logging.info("Utilisation de la fonction pour vérifier que le pourcentage est entre 0 et 100")
-            gestionPourcentage(getattr(args, argument))

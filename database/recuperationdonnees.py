@@ -7,7 +7,7 @@ from creationfichier.fichier import writeM3U, writeXSPF, writePLS
 argument_cli = ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']
 
 #Définition de la playlist
-musiquePL =[]
+musiquePlayList =[] #Musique PlayList
 
 #Fonction permettant de récupérer des données dans la BDD par rapport aux besoins de l'utilisateur
 def recupererDonnees(args):
@@ -17,10 +17,13 @@ def recupererDonnees(args):
                 #Récupération des données dans la base pour chaque argument ci-dessous
                 if (attribut == 'titrePlaylist'):
                     RecuperationDonnees = sqlalchemy.select([table_morceaux]).where(table_morceaux.c.titre == argument[0])
+                #Récupération des données dans la base pour chaque argument ci-dessous
                 if (attribut == 'artistePlaylist'):
                     RecuperationDonnees = sqlalchemy.select([table_morceaux]).where(table_morceaux.c.artiste == argument[0])
+                #Récupération des données dans la base pour chaque argument ci-dessous
                 if (attribut == 'albumPlaylist'):
                     RecuperationDonnees = sqlalchemy.select([table_morceaux]).where(table_morceaux.c.album == argument[0])
+                #Récupération des données dans la base pour chaque argument ci-dessous
                 if (attribut== 'genrePlaylist'):
                     RecuperationDonnees = sqlalchemy.select([table_morceaux]).where(table_morceaux.c.genre == argument[0])
 
@@ -33,16 +36,23 @@ def recupererDonnees(args):
                 
                 
                 argument.insert(2,[]) #Création d'une liste en 3eme position des arguments ex : rock 70 []
-                i=0   #Initialisation de la valeur à 0
-                duree = 0 #Initialisation de la valeur à 0
+                #Initialisation de la valeur à 0
+                i=0   
+                #Initialisation de la valeur à 0
+                duree = 0 
                 
-                for champBDD in recuperation: #Pour chaque musique recuperer dans la liste, on vérifie la durée afin de correspondre au mieux au demande de l'utilisateur
-                    duree += champBDD[5]  #Correspond au champ durée dans la BDD
-                    if(duree < argument[1]*60): #Si durée inf. à durée demandé par utilisateur + conversion en secondes
+                for champBDD in recuperation: 
+                    #Pour chaque musique recuperer dans la liste, on vérifie la durée afin de correspondre au mieux au demande de l'utilisateur
+                    duree += champBDD[5]  
+                    #Correspond au champ durée dans la BDD
+                    if(duree < argument[1]*60): 
+                        #Si durée inf. à durée demandé par utilisateur + conversion en secondes
                         argument[2].insert(i, champBDD) #Insertion de la musique convertit et vérifié dans la liste
                         i += 1
+                        
                     else:
-                        duree -= champBDD[5] #Correspond au champ durée dans la BDD
+                        duree -= champBDD[5] 
+                        #Correspond au champ durée dans la BDD
                           
 
 #Génération de la liste de playlist
@@ -52,13 +62,13 @@ def generationPlaylist(args):
         if getattr(args, attribut) is not None:
             for argument in getattr(args, attribut):
                 for musique in argument[2]: # Pour chaque musique dans la playlist on insére le titre, l'artiste, l'album, le format et le chemin 
-                    musiquePL.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
+                    musiquePlayList.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
                     i += 1
-    random.shuffle(musiquePL) #On mélange les musiques aléatoirement
+    random.shuffle(musiquePlayList) #On mélange les musiques aléatoirement
         
 def Playlist(args):
     duree = 0 #initialisation à 0
-    for musique in musiquePL: #Pour chaque musique dans la playlist selon un genre précis
+    for musique in musiquePlayList: #Pour chaque musique dans la playlist selon un genre précis
         duree += musique[3]
         
     if(duree < args.dureePlaylist*60): #Si la duree de la musique est inférieur à la durée totale demandée par l'utilisateur on effectue la requête permettant d'aller chercher des musiques alétoirement dans la base correspondant au genre
@@ -67,20 +77,20 @@ def Playlist(args):
         resultat = list(resultat)
         random.shuffle(resultat)
     
-    i=len(musiquePL)
+    i=len(musiquePlayList)
     for musique in resultat:
         duree += musique[5] # on vérifie que la durée d'un musique ne dépasse pas la durée de la playlist demandée, si c'est le cas, on insére à nouveau une musique aléatoirement
         if(duree < args.dureePlaylist*60):
-            musiquePL.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
+            musiquePlayList.insert(i, [musique[0], musique[2], musique[1], musique[5], musique[8]])
             i += 1
         else:
             duree -= musique[5] # Si ce n'est pas le cas, on enlève la musique et on en sélectionne une moins grande pour compléter la playlist avec le moins d'écart possible
     
-def EcritureFichier(args, musiquePL): #On gére l'écriture du fichier dans les 3 formats proposés
+def EcritureFichier(args, musiquePlayList): #On gére l'écriture du fichier dans les 3 formats proposés
     if(args.formatPlaylist == 'm3u'):
-        writeM3U(args, musiquePL)
+        writeM3U(args, musiquePlayList)
     if(args.formatPlaylist == 'xspf'):
-        writeXSPF(args, musiquePL)
+        writeXSPF(args, musiquePlayList)
     if(args.formatPlaylist == 'pls'):
-        writePLS(args, musiquePL)
+        writePLS(args, musiquePlayList)
 
