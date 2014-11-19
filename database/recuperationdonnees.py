@@ -1,7 +1,7 @@
 import sqlalchemy
 import random
 from database.Basedonnees_initiation import table_morceaux, connection as conn
-from creationfichier.fichier import writeM3U, writeXSPF, writePLS
+from creationfichier.fichier import M3U, XSPF, PLS
 
 #Définition d'une variable regroupant un ensemble d'arguments
 argument_cli = ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']
@@ -85,12 +85,12 @@ def Playlist(args):
             i += 1
         else:
             duree -= musique[5] # Si ce n'est pas le cas, on enlève la musique et on en sélectionne une moins grande pour compléter la playlist avec le moins d'écart possible
-    
+    return duree
 def EcritureFichier(args, musiquePlayList): #On gére l'écriture du fichier dans les 3 formats proposés
     if(args.formatPlaylist == 'm3u'):
-        writeM3U(args, musiquePlayList)
+        M3U(args, musiquePlayList)
     if(args.formatPlaylist == 'xspf'):
-        writeXSPF(args, musiquePlayList)
+        XSPF(args, musiquePlayList)
     if(args.formatPlaylist == 'pls'):
-        writePLS(args, musiquePlayList)
+        PLS(args, musiquePlayList)
 

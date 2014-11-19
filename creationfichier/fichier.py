@@ -1,7 +1,5 @@
-
-
 #Création d'un fichier au format M3U recuperant la playlist généré préalablement
-def writeM3U(args, musiquePlayList): #Arguments, et la playlist)
+def M3U(args, musiquePlayList): #Arguments, et la playlist)
     
     #Nommage du fichier au demande l'utilisateur
     fichier = args.nomFichierPlaylist +"."+ args.formatPlaylist
@@ -10,6 +8,7 @@ def writeM3U(args, musiquePlayList): #Arguments, et la playlist)
     
     #Boucle permettant de recuperé les chemins(Position(lien) des musiques) d'apres la génération de playlist
     for champ_musique in musiquePlayList:
+        fichier.write("#EXTINF:" + str(champ_musique[3]) + ", " + champ_musique[1] + " - " + champ_musique[0] + "\n\n")
         #Ecriture du fichier avec la playlist
         fichier.write(champ_musique[4] + "\n") #champ_musique[4] correspond au chemin des musiques qui on été inséré dans la playlist
     #Fermeture du fichier
@@ -17,7 +16,7 @@ def writeM3U(args, musiquePlayList): #Arguments, et la playlist)
 
 
 #Création d'un fichier au format XSPF recuperant la playlist généré préalablement
-def writeXSPF(args, musiquePlayList):
+def XSPF(args, musiquePlayList):
     #Nommage du fichier au demande l'utilisateur
     fichierxspf1 = (args.nomFichierPlaylist + "." + args.formatPlaylist)
     #Ouverture du fichier
@@ -42,7 +41,7 @@ def writeXSPF(args, musiquePlayList):
 
 
 #Création d'un fichier au format PLS recuperant la playlist généré préalablement 
-def writePLS(args, musiquePlayList):
+def PLS(args, musiquePlayList):
     i=1
     #Nommage du fichier au demande l'utilisateur
     fichierPLS1 = (args.nomFichierPlaylist + "." + args.formatPlaylist)

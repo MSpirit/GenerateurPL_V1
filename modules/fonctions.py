@@ -2,11 +2,16 @@ import logging
 
 #Vérification d'un temps positif
 def verification_du_temps(argumentAVerifier):
-    logging.info("Utilisation de la fonction pour vérifier que le temps est un entier positif")
-    if argumentAVerifier < 0 :
-        print ("Le temps doit être positif !")
-        logging.error("le temps " + str(argumentAVerifier) + " n'est pas un entier positif")
-        exit(1)
+    try:
+        logging.info("Utilisation de la fonction pour vérifier que le temps est un entier positif")
+        if argumentAVerifier <= 0:
+            print ("Le temps doit être positif !")
+            logging.error("le temps " + str(argumentAVerifier) + " n'est pas un entier positif")
+            exit(1)
+    except ValueError:
+        logging.error("La valeur saisie pour la quantité n'est pas une valeur numérique : '" + argumentAVerifier +"'")
+        exit()
+            
     
     
 #Vérification de la quantité (Pourcentage d'un genre)
@@ -58,4 +63,4 @@ def gestionPourcentage(typeArg):
         print('ok')
     except ValueError:
         logging.error("erreur")
-        return None          
+        return None     
