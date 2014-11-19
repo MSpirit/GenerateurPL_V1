@@ -17,6 +17,7 @@ logging.info(repr(args))
 #Vérification du temps
 modules.fonctions.verification_du_temps(args.dureePlaylist)
 
+
 for argument in ['titrePlaylist','artistePlaylist','albumPlaylist','genrePlaylist']:
 # Si l'argument est renseigné
         if getattr(args, argument) is not None:
